@@ -26,7 +26,7 @@ app.post("/contact", (req, res) => {
     service: 'Gmail',
     auth: {
       user: 'samsemailhelper@gmail.com', // Your email id
-      pass: '' // Your password
+      pass: process.env.EMAIL_PASSWORD // Your password
     }
   });
 
@@ -40,8 +40,10 @@ app.post("/contact", (req, res) => {
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.log(error);
+      res.render("contact-message", {message: "Error sending email"});
     } else {
       console.log('Message sent: ' + info.response);
+      res.render("contact-message", {message: "Your message was sent"});
     };
   });
 });
