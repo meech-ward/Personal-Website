@@ -7,7 +7,15 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 app.get("/", (req, res) => {
-  res.send("Hello iOS Developers!");
+  res.render("index");
+});
+
+app.get("/projects", (req, res) => {
+  res.render("projects");
+});
+
+app.get("/contact", (req, res) => {
+  res.render("contact");
 });
 
 app.listen(port, () => {
