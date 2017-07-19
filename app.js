@@ -1,9 +1,11 @@
 const express = require("express");
+const bodyParser = require('body-parser');
 
 const app = express();
 const port = process.env.PORT || 8080; // default port 8080
 
 app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 app.get("/", (req, res) => {
@@ -19,7 +21,7 @@ app.get("/contact", (req, res) => {
 });
 
 app.post("/contact", (req, res) => {
-  console.log("Submit Contact Form");
+  console.log(req.body);
   res.render("contact");
 });
 
