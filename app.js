@@ -18,6 +18,11 @@ app.get("/contact", (req, res) => {
   res.render("contact");
 });
 
+app.post("/contact", (req, res) => {
+  console.log("Submit Contact Form");
+  res.render("contact");
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`);
 });
