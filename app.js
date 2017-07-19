@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require('body-parser');
+const nodeMailer = require('nodemailer');
 
 const app = express();
 const port = process.env.PORT || 8080; // default port 8080
@@ -21,8 +22,28 @@ app.get("/contact", (req, res) => {
 });
 
 app.post("/contact", (req, res) => {
-  console.log(req.body);
-  res.render("contact");
+  const transporter = nodeMailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: 'samsemailhelper@gmail.com', // Your email id
+      pass: '' // Your password
+    }
+  });
+
+  const mailOptions = {
+    from: req.body.email, // sender address
+    to: 'sam@meech-ward.me', // list of receivers
+    subject: req.body.subject, // Subject line
+    text: `from:\n${req.body.first_name} ${req.body.last_name}\n\n\nmessage:\n${req.body.message}`
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Message sent: ' + info.response);
+    };
+  });
 });
 
 app.listen(port, () => {
